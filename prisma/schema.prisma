@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(uuid())
+  name     String
+  comments Comment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Article {
+  id        String    @id @default(uuid())
+  author    String
+  content   String
+  comments  Comment[]
+  wordIndex WordIndex[]
+  wordArticleCounts WordArticleCount[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("articles")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  text      String
+  userId    String
+  articleId String
+  user      User     @relation(fields: [userId], references: [id])
+  article   Article  @relation(fields: [articleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comments")
+}
+
+model WordIndex {
+  id        String   @id @default(uuid())
+  articleId String
+  word      String
+  positions Int[]
+  article   Article  @relation(fields: [articleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([word])
+  @@map("word_index")
+}
+
+model WordArticleCount {
+  id        String   @id @default(uuid())
+  word      String
+  articleId String
+  count     Int
+  article   Article  @relation(fields: [articleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([word, articleId])
+  @@index([word, count])
+  @@map("word_article_count")
+} 
