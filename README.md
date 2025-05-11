@@ -1,4 +1,4 @@
-# BigID Backend Service
+# Find Words Backend Service
 
 A production-ready Node.js backend service with TypeScript for efficient word finding and analysis in articles.
 
