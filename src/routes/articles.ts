@@ -2,8 +2,9 @@ import { FastifyPluginAsync } from 'fastify';
 import { prisma } from '../index';
 import { WordService } from '../services/word.service';
 import { redis } from '../index';
+import logger from './logger';
 
-const wordService = new WordService(prisma, redis);
+const wordService = new WordService(prisma, redis, logger);
 
 export const articleRoutes: FastifyPluginAsync = async (fastify) => {
   // POST /articles

@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import cors from '@fastify/cors';
-import swagger from '@fastify/swagger';
+import fastifySwagger from '@fastify/swagger';
 import { PrismaClient } from '@prisma/client';
 import Redis from 'ioredis';
 
@@ -23,16 +23,15 @@ export const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379'
 
 // Register plugins
 server.register(cors);
-server.register(swagger, {
-  routePrefix: '/documentation',
+server.register(fastifySwagger, {
   swagger: {
     info: {
-      title: 'BigID Backend API',
-      description: 'API documentation for the BigID backend service',
+      title: 'My API',
+      description: 'API documentation',
       version: '1.0.0',
     },
+    schemes: ['http', 'https'],
   },
-  exposeRoute: true,
 });
 
 // Register routes
