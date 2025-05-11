@@ -81,8 +81,9 @@ The application will be available at http://localhost:3000
 ## Design Decisions and Tradeoffs
 
 1. **PostgreSQL vs Elasticsearch**
-   - Chose PostgreSQL for simplicity and transaction support
-   - For higher volume scenarios, Elasticsearch would be more suitable
+   - Since fast responses are required, both DBs would require preprocessing and indexing.
+   - Chose PostgreSQL for simplicity and transaction support.
+   - ElasticSearch would be more suitable if we were to introduce other word-matching features that don't require pre-computation.
 
 2. **Redis Caching**
    - 10-minute TTL for cache entries
@@ -95,9 +96,13 @@ The application will be available at http://localhost:3000
    - Preprocessed word indexes for faster queries
 
 4. **Performance Optimizations**
-   - Indexed word_index table
+   - Indexed word_index and word_article_count table
    - Batch processing for word statistics
    - Efficient caching strategy
+
+Known Issues:
+Error [ERR_REQUIRE_ESM]: require() of ES Module for p-retry
+It means the p-retry library has switched to ESM-only and cannot be used with require() inside CommonJS modules.
 
 ## Testing
 
