@@ -2,7 +2,7 @@ import { FastifyPluginAsync } from 'fastify';
 import { prisma } from '../index';
 import { redis } from '../index';
 import { WordService } from '../services/word.service';
-import logger from './logger';
+import logger from '../logger';
 
 const wordService = new WordService(prisma, redis, logger);
 

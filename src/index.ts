@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 import Redis from 'ioredis';
 
 import { articleRoutes } from './routes/articles';
-import { userRoutes } from './routes/users';
+import { userRoutes } from './routes/users'
 import { commentRoutes } from './routes/comments';
 import { wordRoutes } from './routes/words';
 
